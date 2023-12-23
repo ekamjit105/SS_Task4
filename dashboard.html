@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+.col-2 {
+            margin-right: 10px; /* Adjust the right margin as needed */
+            margin-bottom: 10px; /* Optional: Adjust the bottom margin as needed */
+        }
+        .col-lg-6{
+            background-color: white;
+            padding:2%;
+            border-radius: 2px;         
+            box-shadow: -2px 2px 2px 2px rgb(220, 219, 219);
+            
+        }
+
+        .metric{
+            background-color: white;
+            border-radius: 1px;
+            box-shadow: -2px 2px 2px 2px rgb(220, 219, 219);
+            border-left: 4px solid green;
+            padding: 1%;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body style="background-color: rgb(227, 226, 226);">
+<br>
+    <div class="container" >
+        
+            <b>Company Metrics</b>
+            <br><br>
+            <div class="row" id="metrics">
+                <!--
+                    heare the metrics cards will be dynamically created according to the fetched data
+                -->
+            </div>
+        
+            <br>
+            <div class="row gx-3">
+                <div class="col-lg-6" >
+                <b>Revenue By Job Location</b> 
+                <canvas id="revlocChart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="col-lg-6" >
+                <b>Revenue By Job Type</b> 
+                <canvas id="revjobChart" width="400" height="200"></canvas>
+                </div>
+
+            </div>
+    </div>
+    <br><br><br>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const stats = {
+            "Total Revenue":124979,
+            "Total Jobs Avg":26346,
+            "Tickets Created":1124,
+            "Tickets Scheduled":3223,
+            "Outstanding Amount":12120,
+            "Memberships Sold":6556,
+            "Jobs Completed":23456,
+            "Total Canceled":2244,
+        }
+    
+
+        for (const key in stats) {
+                const value = stats[key];
+                console.log(`Key: ${key}, Value: ${value}`);
+                document.getElementById("metrics").innerHTML+="<div class='col-lg-3 mb-3 metric'><b>"+value+"</b><br>"+key+"</div>"
+        }
+
+        const Revloc = {
+            "Everett":200000,
+            "Seattle":130000,
+            "Lynnwood":49000,
+            "Bothell":47000,
+            "Mukilteo":45000,
+            "Edmonds":33000
+        }
+
+        const Revjob = {
+            "Service Plumbing":400000,
+            "Bid Work HVAC":130000,
+            "Servecie HVAC":78000,
+            "Bid Work Plumbing":70000,
+            "HWT Replacement":45000,
+            "Maintainence":42000,
+            "Material Sale":3000
+        }
+    
+
+
+
+        function createBarChart(canvasId, data, label) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: label,
+                        data: Object.values(data),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        indexAxis:'x',
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create bar charts
+        createBarChart('revlocChart', Revloc, 'Revenue for November 2019 - Location');
+        createBarChart('revjobChart', Revjob, 'Revenue for November 2019 - Job Type');
+    
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>
